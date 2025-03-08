@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>S.H Convert</title>
+  <style>
+    /* Reset and Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #3498db, #2ecc71); /* Two matching colors */
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow-x: hidden;
+    }
+    header {
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+      animation: fadeIn 2s ease-in-out;
+    }
+    .converter-container {
+      background-color: rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 600px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      animation: slideIn 1s ease-out;
+    }
+    .input-group {
+      display: flex;
+      margin-bottom: 15px;
+    }
+    .input-group input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 5px 0 0 5px;
+      font-size: 1em;
+      outline: none;
+    }
+    .input-group button {
+      padding: 10px 20px;
+      border: none;
+      background-color: #27ae60;
+      color: #fff;
+      font-size: 1em;
+      border-radius: 0 5px 5px 0;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .input-group button:hover {
+      background-color: #2ecc71;
+    }
+    .spinner {
+      margin: 20px auto;
+      width: 50px;
+      height: 50px;
+      border: 5px solid rgba(255, 255, 255, 0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      display: none;
+    }
+    .results {
+      margin-top: 20px;
+      display: none;
+      animation: fadeIn 1s ease-in-out;
+    }
+    .results button {
+      padding: 10px 20px;
+      border: none;
+      background-color: #27ae60;
+      color: #fff;
+      font-size: 1em;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+      margin: 10px;
+    }
+    .results button:hover {
+      transform: scale(1.05);
+    }
+    footer {
+      margin-top: 30px;
+      font-size: 0.9em;
+      animation: fadeIn 2s ease-in-out;
+    }
+    /* Keyframes for animations */
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes slideIn {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    /* Fire pop animation */
+    @keyframes pop {
+      0% { transform: scale(0.5); opacity: 0; }
+      50% { transform: scale(1.2); opacity: 1; }
+      100% { transform: scale(1); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    S.H Convert
+  </header>
+  <div class="converter-container">
+    <!-- Input for YouTube URL and Convert Button -->
+    <div class="input-group">
+      <input type="text" id="youtubeUrl" placeholder="Enter YouTube video URL here">
+      <button id="convertBtn">Convert</button>
+    </div>
+    <!-- Fire Effect Animation -->
+    <div id="fireEffect" style="font-size: 2em; display: none;">&#128293;</div>
+    <!-- Spinner for waiting animation -->
+    <div class="spinner" id="spinner"></div>
+    <!-- Conversion Results (Simulated) -->
+    <div class="results" id="results">
+      <div>
+        <button onclick="simulateDownload('mp3')">MP3 - High Quality</button>
+        <button onclick="simulateDownload('mp4')">MP4 - Full HD</button>
+      </div>
+    </div>
+  </div>
+  <footer>
+    Developed by S.H art<br>
+    © All rights reserved.
+  </footer>
+  <script>
+    document.getElementById('convertBtn').addEventListener('click', function() {
+      var url = document.getElementById('youtubeUrl').value;
+      if(url.trim() === "") {
+        alert("Please enter a YouTube video URL");
+        return;
+      }
+      
+      // Show fire effect (simulating a “fire” animation)
+      var fire = document.getElementById('fireEffect');
+      fire.style.display = "block";
+      fire.style.animation = "pop 0.5s ease-out";
+      
+      // Hide previous results if any
+      document.getElementById('results').style.display = "none";
+      
+      // After a short delay, hide the fire and show a spinner
+      setTimeout(function() {
+        fire.style.display = "none";
+        var spinner = document.getElementById('spinner');
+        spinner.style.display = "block";
+        
+        // Simulate conversion delay (e.g., backend processing)
+        setTimeout(function() {
+          spinner.style.display = "none";
+          var results = document.getElementById('results');
+          results.style.display = "block";
+        }, 3000);
+      }, 500);
+    });
+    
+    // Simulate download process with another spinner effect
+    function simulateDownload(format) {
+      var results = document.getElementById('results');
+      results.innerHTML = '<div class="spinner" style="display:block;"></div>';
+      setTimeout(function() {
+        alert("Your " + format.toUpperCase() + " file is downloading!");
+        // Reset the results area for potential future conversions
+        results.style.display = "none";
+        results.innerHTML = '<div><button onclick="simulateDownload(\'mp3\')">MP3 - High Quality</button> <button onclick="simulateDownload(\'mp4\')">MP4 - Full HD</button></div>';
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
