@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حاسب المعدل</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1e1e2f;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+        h2 {
+            color: #FF5733;
+            font-size: 2.5rem;
+            animation: fadeIn 2s ease-in-out;
+        }
+        h3 {
+            color: #00FFFF;
+            font-size: 1.5rem;
+            animation: fadeIn 3s ease-in-out;
+        }
+        .container {
+            background-color: #2a2a40;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            animation: slideIn 0.5s ease-in-out;
+        }
+        .btn {
+            background-color: #4e9af1;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #3a7bd5;
+        }
+        .step {
+            display: none;
+        }
+        .step.active {
+            display: block;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #444;
+        }
+        input[type="number"] {
+            width: 60px;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #444;
+            background-color: #1e1e2f;
+            color: #fff;
+        }
+        input[type="checkbox"] {
+            cursor: pointer;
+        }
+        .result {
+            font-size: 1.5rem;
+            color: #FF0000;
+            margin-top: 20px;
+            animation: fadeIn 2s ease-in-out;
+        }
+        footer {
+            margin-top: 30px;
+            color: #a1a1a1;
+            font-size: 1.2rem;
+            animation: fadeIn 4s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <h2>حاسب المعدل</h2>
+    <h3><a href="s-h-art.github.io/about"target="_blank">BY S.H ART</a></h3>
+    <h4>حساب المعدل الفصلي من خلال معدلات المادة</h4>
+    <div class="container">
+        <div id="step1" class="step active">
+            <button class="btn" onclick="showStep('step2_1')">السنة الأولى ثانوي</button>
+            <button class="btn" onclick="showStep('step2_2')">السنة الثانية ثانوي</button>
+            <button class="btn" onclick="showStep('step2_3')">السنة الثالثة ثانوي</button>
+        </div>
+        <div id="step2_1" class="step">
+            <button class="btn" onclick="showStep('step3')">جذع مشترك علوم و تكنولوجيا</button>
+            <button class="btn" onclick="showStep('step3')">جذع مشترك آداب</button>
+        </div>
+        <div id="step2_2" class="step">
+            <button class="btn" onclick="showStep('step3')">شعبة آداب و فلسفة</button>
+            <button class="btn" onclick="showStep('step3')">شعبة لغات أجنبية</button>
+            <button class="btn" onclick="showStep('step3')">شعبة رياضيات</button>
+            <button class="btn" onclick="showStep('step3')">شعبة علوم تجريبية</button>
+            <button class="btn" onclick="showStep('step3')">شعبة تقني رياضي</button>
+            <button class="btn" onclick="showStep('step3')">شعبة تسيير و إقتصاد</button>
+        </div>
+        <div id="step2_3" class="step">
+            <button class="btn" onclick="showStep('step3')">شعبة آداب و فلسفة</button>
+            <button class="btn" onclick="showStep('step3')">شعبة لغات أجنبية</button>
+            <button class="btn" onclick="showStep('step3')">شعبة رياضيات</button>
+            <button class="btn" onclick="showStep('step3')">شعبة علوم تجريبية</button>
+            <button class="btn" onclick="showStep('step3')">شعبة تقني رياضي</button>
+            <button class="btn" onclick="showStep('step3')">شعبة تسيير و إقتصاد</button>
+        </div>
+        <div id="step3" class="step">
+            <table>
+                <thead>
+                    <tr>
+                        <th>المواد</th>
+                        <th>المعاملات</th>
+                        <th>معدل المادة</th>
+                        <th>تضمين</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>اللغة العربية</td>
+                        <td><input type="number" id="arabic_coeff" min="1" max="10" value="1"></td>
+                        <td><input type="number" id="arabic_grade" min="0" max="20" value="0"></td>
+                        <td><input type="checkbox" id="arabic_include" checked></td>
+                    </tr>
+                    <tr>
+                        <td>الرياضيات</td>
+                        <td><input type="number" id="math_coeff" min="1" max="10" value="1"></td>
+                        <td><input type="number" id="math_grade" min="0" max="20" value="0"></td>
+                        <td><input type="checkbox" id="math_include" checked></td>
+                    </tr>
+                    <tr>
+                        <td>العلوم الفيزيائية</td>
+                        <td><input type="number" id="physics_coeff" min="1" max="10" value="1"></td>
+                        <td><input type="number" id="physics_grade" min="0" max="20" value="0"></td>
+                        <td><input type="checkbox" id="physics_include"></td>
+                    </tr>
+                    <tr>
+                        <td>العلوم الطبيعية</td>
+                        <td><input type="number" id="science_coeff" min="1" max="10" value="1"></td>
+                        <td><input type="number" id="science_grade" min="0" max="20" value="0"></td>
+                        <td><input type="checkbox" id="science_include"></td>
+                    </tr>
+                    <tr>
+                        <td>التاريخ و الجغرافيا</td>
+                        <td><input type="number" id="history_coeff" min="1" max="10" value="1"></td>
+                        <td><input type="number" id="history_grade" min="0" max="20" value="0"></td>
+                        <td><input type="checkbox" id="history_include" checked></td>
+                    </tr>
+                    <tr>
+                        <td>اللغة الفرنسية</td>
+                        <td><input type="number" id="french_coeff" min="1" max="10" value="1"></td>
+                        <td><input type="number" id="french_grade" min="0" max="20" value="0"></td>
+                        <td><input type="checkbox" id="french_include" checked></td>
+                    </tr>
+                    <tr>
+                        <td>اللغة الإنجليزية</td>
+                        <td><input type="number" id="english_coeff" min="1" max="10" value="1"></td>
+                        <td><input type="number" id="english_grade" min="0" max="20" value="0"></td>
+                        <td><input type="checkbox" id="english_include" checked></td>
+                    </tr>
+                    <tr>
+                        <td>اللغة الأمازيغية</td>
+                        <td><input type="number" id="tamazight_coeff" min="1" max="10" value="1"></td>
+                        <td><input type="number" id="tamazight_grade" min="0" max="20" value="0"></td>
+                        <td><input type="checkbox" id="tamazight_include" checked></td>
+                    </tr>
+                    <tr>
+                        <td>اللغة الألمانية</td>
+                        <td><input type="number" id="german_coeff" min="1" max="10" value="1"></td>
+                        <td><input type="number" id="german_grade" min="0" max="20" value="0"></td>
+                        <td><input type="checkbox" id="german_include"></td>
+                    </tr>
+                    <tr>
+                        <td>التربية الإسلامية</td>
+                        <td><input type="number" id="islamic_coeff" min="1" max="10" value="1"></td>
+                        <td><input type="number" id="islamic_grade" min="0" max="20" value="0"></td>
+                        <td><input type="checkbox" id="islamic_include" checked></td>
+                    </tr>
+                    <tr>
+                        <td>الرياضة</td>
+                        <td><input type="number" id="sport_coeff" min="1" max="10" value="1"></td>
+                        <td><input type="number" id="sport_grade" min="0" max="20" value="0"></td>
+                        <td><input type="checkbox" id="sport_include"></td>
+                    </tr>
+                    <tr>
+                        <td>القانون</td>
+                        <td><input type="number" id="law_coeff" min="1" max="10" value="1"></td>
+                        <td><input type="number" id="law_grade" min="0" max="20" value="0"></td>
+                        <td><input type="checkbox" id="law_include" checked></td>
+                    </tr>
+                    <tr>
+                        <td>التسيير المحاسبي و المالي</td>
+                        <td><input type="number" id="accounting_coeff" min="1" max="10" value="1"></td>
+                        <td><input type="number" id="accounting_grade" min="0" max="20" value="0"></td>
+                        <td><input type="checkbox" id="accounting_include" checked></td>
+                    </tr>
+                    <tr>
+                        <td>الإقتصاد و المناجمنت</td>
+                        <td><input type="number" id="economics_coeff" min="1" max="10" value="1"></td>
+                        <td><input type="number" id="economics_grade" min="0" max="20" value="0"></td>
+                        <td><input type="checkbox" id="economics_include" checked></td>
+                    </tr>
+                    <tr>
+                        <td>الفلسفة</td>
+                        <td><input type="number" id="philosophy_coeff" min="1" max="10" value="1"></td>
+                        <td><input type="number" id="philosophy_grade" min="0" max="20" value="0"></td>
+                        <td><input type="checkbox" id="philosophy_include" checked></td>
+                    </tr>
+                    <tr>
+                        <td>التكنولوجيا</td>
+                        <td><input type="number" id="technology_coeff" min="1" max="10" value="1"></td>
+                        <td><input type="number" id="technology_grade" min="0" max="20" value="0"></td>
+                        <td><input type="checkbox" id="technology_include" checked></td>
+                    </tr>
+                    <tr>
+    <td colspan="4">
+        <label for="reading_bonus">تثمين المطالعة:</label>
+        <input type="number" id="reading_bonus" min="10" max="20" value="10">
+    </td>
+</tr>
+<tr>
+    <td colspan="4">
+        <label for="project_bonus">تثمين المشاريع:</label>
+        <input type="number" id="project_bonus" min="10" max="20" value="10">
+    </td>
+</tr>
+                </tbody>
+            </table>
+            <button class="btn" onclick="calculateAverage()">حساب المعدل</button>
+            <div class="result" id="result"></div>
+        </div>
+    </div>
+<footer>
+        <p>&copy; 2025 S.H Art. All rights reserved.</p>
+        <div class="social-links">
+            <a href="https://www.facebook.com/profile.php?id=61557417475097" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a href="https://youtube.com/@houche.said" target="_blank"><i class="fab fa-youtube"></i></a>
+        </div>
+    </footer>
+
+    <script>
+        function showStep(stepId) {
+            document.querySelectorAll('.step').forEach(step => {
+                step.classList.remove('active');
+            });
+            document.getElementById(stepId).classList.add('active');
+        }
+
+        function calculateAverage() {
+            const subjects = [
+                { coeff: 'arabic_coeff', grade: 'arabic_grade', include: 'arabic_include' },
+                { coeff: 'math_coeff', grade: 'math_grade', include: 'math_include' },
+                { coeff: 'physics_coeff', grade: 'physics_grade', include: 'physics_include' },
+                { coeff: 'science_coeff', grade: 'science_grade', include: 'science_include' },
+                { coeff: 'history_coeff', grade: 'history_grade', include: 'history_include' },
+                { coeff: 'french_coeff', grade: 'french_grade', include: 'french_include' },
+                { coeff: 'english_coeff', grade: 'english_grade', include: 'english_include' },
+                { coeff: 'german_coeff', grade: 'german_grade', include: 'german_include' },
+                { coeff: 'islamic_coeff', grade: 'islamic_grade', include: 'islamic_include' },
+                { coeff: 'sport_coeff', grade: 'sport_grade', include: 'sport_include' },
+                { coeff: 'law_coeff', grade: 'law_grade', include: 'law_include' },
+                { coeff: 'tamazight_coeff', grade: 'tamazight_grade', include: 'tamazight_include' },
+                { coeff: 'accounting_coeff', grade: 'accounting_grade', include: 'accounting_include' },
+                { coeff: 'economics_coeff', grade: 'economics_grade', include: 'economics_include' },
+                { coeff: 'philosophy_coeff', grade: 'philosophy_grade', include: 'philosophy_include' },
+                { coeff: 'technology_coeff', grade: 'technology_grade', include: 'technology_include' }
+            ];
+
+            let totalCoeff = 0;
+            let totalGrade = 0;
+
+            subjects.forEach(subject => {
+                const include = document.getElementById(subject.include).checked;
+                if (include) {
+                    const coeff = parseFloat(document.getElementById(subject.coeff).value);
+                    const grade = parseFloat(document.getElementById(subject.grade).value);
+                    totalCoeff += coeff;
+                    totalGrade += coeff * grade;
+                }
+            });
+
+            const average = totalGrade / totalCoeff;
+            document.getElementById('result').innerHTML = `المعدل الفصلي هو: ${average.toFixed(2)}`;
+        }
+    function calculateAverage() {
+    const subjects = [
+        { coeff: 'arabic_coeff', grade: 'arabic_grade', include: 'arabic_include' },
+        { coeff: 'math_coeff', grade: 'math_grade', include: 'math_include' },
+        { coeff: 'physics_coeff', grade: 'physics_grade', include: 'physics_include' },
+        { coeff: 'science_coeff', grade: 'science_grade', include: 'science_include' },
+        { coeff: 'history_coeff', grade: 'history_grade', include: 'history_include' },
+        { coeff: 'french_coeff', grade: 'french_grade', include: 'french_include' },
+        { coeff: 'english_coeff', grade: 'english_grade', include: 'english_include' },
+        { coeff: 'german_coeff', grade: 'german_grade', include: 'german_include' },
+        { coeff: 'islamic_coeff', grade: 'islamic_grade', include: 'islamic_include' },
+        { coeff: 'sport_coeff', grade: 'sport_grade', include: 'sport_include' },
+        { coeff: 'law_coeff', grade: 'law_grade', include: 'law_include' },
+        { coeff: 'tamazight_coeff', grade: 'tamazight_grade', include: 'tamazight_include' },
+        { coeff: 'accounting_coeff', grade: 'accounting_grade', include: 'accounting_include' },
+        { coeff: 'economics_coeff', grade: 'economics_grade', include: 'economics_include' },
+        { coeff: 'philosophy_coeff', grade: 'philosophy_grade', include: 'philosophy_include' },
+        { coeff: 'technology_coeff', grade: 'technology_grade', include: 'technology_include' }
+    ];
+
+    let totalCoeff = 0;
+    let totalGrade = 0;
+
+    subjects.forEach(subject => {
+        const include = document.getElementById(subject.include).checked;
+        if (include) {
+            const coeff = parseFloat(document.getElementById(subject.coeff).value);
+            const grade = parseFloat(document.getElementById(subject.grade).value);
+            totalCoeff += coeff;
+            totalGrade += coeff * grade;
+        }
+    });
+
+    // Get تثمين المطالعة and تثمين المشاريع values
+    const readingBonus = parseFloat(document.getElementById('reading_bonus').value);
+    const projectBonus = parseFloat(document.getElementById('project_bonus').value);
+
+    // Only add if the value is greater than 10
+    if (readingBonus > 10) {
+        totalGrade += (readingBonus - 10);
+    }
+    if (projectBonus > 10) {
+        totalGrade += (projectBonus - 10);
+    }
+
+    const average = totalGrade / totalCoeff;
+    document.getElementById('result').innerHTML = `المعدل الفصلي هو: ${average.toFixed(2)}`;
+}
+    </script>
+</body>
+</html>
